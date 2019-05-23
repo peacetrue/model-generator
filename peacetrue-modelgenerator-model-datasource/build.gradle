@@ -1,4 +1,4 @@
-description '支持模型转换'
+description '从数据源中读取模型信息'
 
 dependencies {
     implementation rootProject
