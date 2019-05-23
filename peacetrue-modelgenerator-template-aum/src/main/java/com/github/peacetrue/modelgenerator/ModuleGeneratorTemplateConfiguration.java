@@ -50,7 +50,7 @@ public class ModuleGeneratorTemplateConfiguration {
         if (values.length == 2) {
             //java file
             String filePath = String.format("%s/%s/src/main/java", properties.getProjectSourcePath(), properties.getProjectSourceName() + "-" + values[1]);
-            JavaTemplate javaTemplate = new JavaTemplate();
+            JavaTemplateImpl javaTemplate = new JavaTemplateImpl();
             javaTemplate.setContent(getContent(values[0]));
             javaTemplate.setPackageName(String.format("com.aum.%s.modules.%s", properties.getProjectName(), "#{name.toLowerCase()}"));
             String suffix = values[0].split("\\.")[0].split("_")[0];
@@ -63,7 +63,7 @@ public class ModuleGeneratorTemplateConfiguration {
                     properties.getProjectSourceName() + "-" + values[1],
                     values[0].split("\\.")[0]
             );
-            return new Template(getContent(values[0]), filePath);
+            return new TemplateImpl(getContent(values[0]), filePath);
         }
     }
 

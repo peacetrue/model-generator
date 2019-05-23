@@ -1,15 +1,3 @@
-#*
-display: Detail;
-extension: html;
-filename: detail;
-subPath: ;
-root: aum;
-group: page;
-level: 1;
-isResources: true;
-order: 1;
-*#
-
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       xmlns:th="http://www.thymeleaf.org"
       layout:decorate="~{layouts/iview}">
@@ -22,8 +10,8 @@ order: 1;
 <i-content layout:fragment="content">
     <detail :data="data" v-if="data.id">
         <row>
-            #foreach($item in $fields)
-                <detail-item label="${item.comment}" name="${item.field}"></detail-item>
+            #foreach($property in $properties)
+                <detail-item label="${property.comment}" name="${property.name}"></detail-item>
             #end
         </row>
     </detail>
@@ -42,7 +30,7 @@ order: 1;
             },
         },
         created() {
-            axios.get(`/#LowerCase(${model})?id=${this.location.params.get('id')}`)
+            axios.get(`/${lowerName}?id=${this.location.params.get('id')}`)
                     .then(t => Vue.set(this, 'data', this.filter(t.data)));
         }
     });

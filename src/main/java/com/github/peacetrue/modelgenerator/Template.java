@@ -1,20 +1,15 @@
 package com.github.peacetrue.modelgenerator;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.function.Function;
-
 /**
+ * 模板信息
+ *
  * @author xiayx
  */
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-public class Template {
-    /** 模板内容 */
-    private String content;
-    /** 模板生成后的存储文件路径 */
-    private String outputPath;
+public interface Template {
+
+    /** 获取模板内容 */
+    String getContent();
+
+    /** 获取模板生成文件存储地址 */
+    String getOutputPath();
 }

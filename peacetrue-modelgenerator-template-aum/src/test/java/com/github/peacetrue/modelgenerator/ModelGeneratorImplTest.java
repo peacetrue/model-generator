@@ -24,6 +24,7 @@ public class ModelGeneratorImplTest {
     @Test
     public void generate() {
         modelGenerator.generate(ModelTemplateGeneratorImplTest.model);
+        modelGenerator.generate(ModelTemplateGeneratorImplTest.model2);
     }
 
 }
