@@ -63,7 +63,7 @@ allprojects {
                 pom {
                     name = project.name
                     description = project.description
-                    url = 'https://github.com/peacetrue/spring-data-commons-page'
+                    url = 'https://github.com/peacetrue/model-generator'
                     licenses {
                         license {
                             name = 'The Apache License, Version 2.0'
@@ -78,9 +78,9 @@ allprojects {
                         }
                     }
                     scm {
-                        connection = 'https://github.com/peacetrue/spring-data-commons-page.git'
-                        developerConnection = 'https://github.com/peacetrue/spring-data-commons-page.git'
-                        url = 'https://github.com/peacetrue/spring-data-commons-page'
+                        connection = 'https://github.com/peacetrue/model-generator.git'
+                        developerConnection = 'https://github.com/peacetrue/model-generator.git'
+                        url = 'https://github.com/peacetrue/model-generator'
                     }
                 }
 
