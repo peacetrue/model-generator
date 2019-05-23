@@ -1,0 +1,102 @@
+package $packageName;
+
+import com.github.pagehelper.PageHelper;
+import com.github.peacetrue.mybatis.MybatisUtils;
+import com.github.peacetrue.mybatis.PageHelperUtils;
+import com.github.peacetrue.result.exception.ResultException;
+import com.github.peacetrue.spring.util.BeanUtils;
+import com.github.peacetrue.util.UUIDUtils;
+import org.mybatis.dynamic.sql.SqlBuilder;
+import org.mybatis.dynamic.sql.render.RenderingStrategy;
+import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Nullable;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
+import static $packageName.${name}DynamicSqlSupport.${lowerName};
+
+/**
+* ${comment}服务实现
+* @author xiayx
+*/
+@Service
+public class ${name}ServiceImpl implements ${name}Service {
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
+    @Autowired
+    private ${name}MapperX ${lowerName}MapperX;
+
+    @Override
+    public ${name}VO add(${name}AddDTO dto) throws ResultException {
+        logger.info("新增信息");
+        logger.debug("dto: {}", dto);
+        ${name} record = BeanUtils.toSubclass(dto, ${name}.class);
+        record.setId(UUIDUtils.randomUUID());
+        record.setCreatorId(dto.getOperatorId());
+        record.setCreatedTime(new Date());
+        record.setModifierId(dto.getOperatorId());
+        record.setModifiedTime(record.getCreatedTime());
+        ${lowerName}MapperX.insertSelective(record);
+        return BeanUtils.toSubclass(record, ${name}VO.class);
+    }
+    
+    @Override
+    public Page<${name}VO> query(@Nullable ${name}QueryDTO dto, Pageable pageable) throws ResultException {
+        logger.info("分页查询信息");
+        logger.debug("dto: {}, page: {}", dto, pageable);
+    
+        if (dto == null) dto = new ${name}QueryDTO();
+        SelectStatementProvider provider = SqlBuilder.select(MybatisUtils.getSqlColumns(${lowerName}))
+        .from(${lowerName})
+        .where(${lowerName}.code, SqlBuilder.isLikeWhenPresent(MybatisUtils.likeValue(dto.getCode())))
+        .and(${lowerName}.name, SqlBuilder.isEqualToWhenPresent(MybatisUtils.likeValue(dto.getName())))
+        .and(${lowerName}.createdTime, SqlBuilder.isGreaterThanOrEqualToWhenPresent(dto.getCreatedTime().getLowerBound()))
+        .and(${lowerName}.createdTime, SqlBuilder.isLessThanOrEqualToWhenPresent(MybatisUtils.endDateValue(dto.getCreatedTime().getUpperBound())))
+        .orderBy(MybatisUtils.orders(${lowerName}, pageable.getSort())).build().render(RenderingStrategy.MYBATIS3);
+    
+        PageHelper.startPage(pageable.getPageNumber(), pageable.getPageSize());
+        List<${name}> entities = ${lowerName}MapperX.selectMany(provider);
+        logger.debug("共取得'{}'条记录", entities.size());
+        if (entities.isEmpty()) return new PageImpl<>(Collections.emptyList());
+
+        List<${name}VO> vos = BeanUtils.replaceAsList(entities, ${name}VO.class);
+        return new PageImpl<>(vos, null, PageHelperUtils.getTotal(entities));
+    }
+    
+    @Override
+    public ${name}VO get(${name}GetDTO dto) throws ResultException {
+        logger.info("根据'{}'获取信息", dto);
+        ${name} ${name} = ${lowerName}MapperX.selectByPrimaryKey(dto.getId());
+        return ${name} == null ? null : BeanUtils.toSubclass(${name}, ${name}VO.class);
+    }
+    
+    @Override
+    public void modify(${name}ModifyDTO dto) throws ResultException {
+        logger.info("修改信息");
+        logger.debug("dto: {}", dto);
+
+        ${name} record = BeanUtils.toSubclass(dto, ${name}.class);
+        record.setModifierId(dto.getOperatorId());
+        record.setModifiedTime(new Date());
+        int count = ${lowerName}MapperX.updateByPrimaryKeySelective(record);
+        logger.debug("影响'{}'行记录", count);
+    }
+    
+    @Override
+    public void delete(${name}DeleteDTO dto) throws ResultException {
+        logger.info("删除信息");
+        logger.debug("dto: {}", dto);
+        int count = ${lowerName}MapperX.deleteByPrimaryKey(dto.getId());
+        logger.debug("影响'{}'行记录", count);
+    }
+}

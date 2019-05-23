@@ -1,0 +1,26 @@
+package $packageName;
+
+import lombok.Data;
+
+import java.io.Serializable;
+
+#foreach($property in $properties)
+#if(!$property.typeName.startsWith('java.lang'))
+import $property.typeName;
+#end
+#end
+
+/**
+* ${comment}获取DTO
+* @author xiayx
+*/
+@Data
+public class ${name}GetDTO implements Serializable {
+
+    #foreach($property in $properties)
+    #if($idProperty==$property)
+    /** $property.comment */
+    private $property.typeSimpleName $property.name;
+    #end
+    #end
+}

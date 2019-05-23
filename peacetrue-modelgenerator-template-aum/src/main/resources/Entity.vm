@@ -1,0 +1,23 @@
+package $packageName;
+
+import lombok.Data;
+
+import java.io.Serializable;
+
+#foreach($property in $properties)
+#if(!$property.typeName.startsWith('java.lang'))
+import $property.typeName;
+#end
+#end
+
+/**
+* @author xiayx
+*/
+@Data
+public class $name implements Serializable {
+
+    #foreach($property in $properties)
+    /**$property.comment*/
+    private $property.typeSimpleName $property.name;
+    #end
+}

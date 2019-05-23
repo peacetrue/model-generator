@@ -1,0 +1,25 @@
+package $packageName;
+
+import com.github.peacetrue.core.OperatorCapableImpl;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+#foreach($property in $properties)
+#if(!$property.typeName.startsWith('java.lang'))
+import $property.typeName;
+#end
+#end
+
+/**
+ * ${comment}修改DTO
+ * @author xiayx
+ */
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class ${name}ModifyDTO extends OperatorCapableImpl<String> {
+
+#foreach($property in $properties)
+    /**$property.comment*/
+    private $property.typeSimpleName $property.name;
+#end
+}

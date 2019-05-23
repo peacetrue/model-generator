@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/iview}">
+<head>
+    <title>${comment}列表</title>
+</head>
+<body>
+<i-content layout:fragment="content">
+    <card>
+        <span slot="title">查询条件</span>
+        <i-form ref="condition" :model="condition.params" :rules="condition.rules" inline>
+            #foreach($property in $properties)
+            <form-item>
+                <i-input type="text" v-model="condition.params.${property.name}" placeholder="${property.comment}">
+                    <i-icon type="ios-person-outline" slot="prepend"></i-icon>
+                </i-input>
+            </form-item>
+            #end
+            <form-item>
+                <i-button type="primary" @click="query(true)">查询</i-button>
+                <i-button @click="reset">清空</i-button>
+            </form-item>
+        </i-form>
+    </card>
+    <br>
+    <div th:replace="fragments/list :: result"></div>
+</i-content>
+</body>
+<script layout:fragment="script" th:inline="javascript">
+    let vue = new ListVue({
+        data() {
+            return {
+                condition: {
+                    params: {
+                        createdTime: {}
+                    }
+                },
+                result: {
+                    columns: [
+                        #foreach($property in $properties)
+                        {title: '${property.comment}', key: '${property.name}', width: 130, tooltip: true},
+                        #end
+                        {title: '创建时间', key: 'createdTime', width: 130, sortable: 'custom', tooltip: true, sortType: 'desc'},
+                        {
+                            title: '操作', key: 'action', align: 'center',
+                            render: (h, params) => {
+                                let row = params.row;
+                                let buttons = [];
+                                buttons.push(this.buildBtn(h, params, {text: '新增', click: () => this.openAdd(row)}));
+                                return h('div', buttons);
+                            }
+                        }
+                    ],
+                },
+            };
+        },
+        methods: {
+            openAdd(row) {
+                this.detail.model = true;
+                this.detail.row = row;
+            },
+        }
+    });
+</script>
+</html>

@@ -1,0 +1,17 @@
+description '关于黄金管家的spring、dubbo、mybatis项目的模板'
+
+dependencies {
+    implementation rootProject
+
+    testImplementation 'com.github.peacetrue:peacetrue-core:1.0-SNAPSHOT'
+    testImplementation 'com.github.peacetrue:peacetrue-result:1.0-SNAPSHOT'
+    testImplementation 'com.github.peacetrue:peacetrue-mybatis:1.0-SNAPSHOT'
+    testImplementation 'com.github.peacetrue:peacetrue-spring:1.0-SNAPSHOT'
+    testImplementation 'com.github.peacetrue:spring-data-commons-page:1.0-RELEASE'
+    testImplementation 'org.springframework.data:spring-data-commons:1.12.3.RELEASE'
+    testImplementation 'org.springframework:spring-web:5.0.6.RELEASE'
+    testImplementation 'org.springframework.security:spring-security-web:5.0.5.RELEASE'
+    testImplementation 'com.github.pagehelper:pagehelper:5.1.2'
+    testImplementation 'org.mybatis:mybatis:3.4.6'
+    testImplementation 'org.mybatis.dynamic-sql:mybatis-dynamic-sql:1.1.0'
+}

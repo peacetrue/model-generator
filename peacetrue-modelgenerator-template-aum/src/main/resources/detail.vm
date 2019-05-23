@@ -1,0 +1,50 @@
+#*
+display: Detail;
+extension: html;
+filename: detail;
+subPath: ;
+root: aum;
+group: page;
+level: 1;
+isResources: true;
+order: 1;
+*#
+
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layouts/iview}">
+<head>
+    <title>${comment}详情</title>
+    <link th:href="@{/detail/main.css}" rel="stylesheet">
+    <script th:src="@{/detail/main.js}"></script>
+</head>
+<body>
+<i-content layout:fragment="content">
+    <detail :data="data" v-if="data.id">
+        <row>
+            #foreach($item in $fields)
+                <detail-item label="${item.comment}" name="${item.field}"></detail-item>
+            #end
+        </row>
+    </detail>
+</i-content>
+</body>
+<script layout:fragment="script">
+    let vue = new LayoutVue({
+        data() {
+            return {
+                data: {},
+            };
+        },
+        methods: {
+            filter(data) {
+                return data;
+            },
+        },
+        created() {
+            axios.get(`/#LowerCase(${model})?id=${this.location.params.get('id')}`)
+                    .then(t => Vue.set(this, 'data', this.filter(t.data)));
+        }
+    });
+</script>
+</html>

@@ -1,0 +1,109 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'maven-publish'
+    id 'signing'
+}
+
+
+allprojects {
+
+    group 'com.github.peacetrue.modelgenerator'
+//version '1.0-RELEASE'
+    version '1.0-SNAPSHOT'
+    description '模块生成器'
+
+    apply plugin: 'java'
+    sourceCompatibility = 1.8
+
+    repositories {
+        maven { url('https://nexus.au32.cn/repository/maven-releases') }
+        maven { url('https://nexus.au32.cn/repository/maven-snapshots') }
+        mavenCentral()
+    }
+
+    apply plugin: 'java'
+
+    dependencies {
+        compileOnly 'org.projectlombok:lombok:1.16.20'
+        annotationProcessor 'org.projectlombok:lombok:1.16.20'
+        implementation 'org.apache.velocity:velocity-engine-core:2.1'
+        implementation 'org.springframework:spring-context-support:5.0.6.RELEASE'
+        implementation 'org.springframework.boot:spring-boot-autoconfigure:2.0.6.RELEASE'
+        implementation 'org.springframework.boot:spring-boot-configuration-processor:2.0.6.RELEASE'
+        implementation 'org.springframework:spring-expression:5.0.6.RELEASE'
+        implementation 'ch.qos.logback:logback-classic:1.2.3'
+        
+
+        testImplementation 'junit:junit:4.12'
+        testImplementation 'org.springframework:spring-test:5.0.6.RELEASE'
+        testCompileOnly 'org.projectlombok:lombok:1.16.20'
+        testAnnotationProcessor 'org.projectlombok:lombok:1.16.20'
+    }
+
+    task sourcesJar(type: Jar) {
+        archiveClassifier = 'sources'
+        from sourceSets.main.allJava
+    }
+
+    task javadocJar(type: Jar) {
+        archiveClassifier = 'javadoc'
+        from javadoc.destinationDir
+    }
+
+    def repository_snapshots = "https://oss.sonatype.org/content/repositories/snapshots/"
+    def repository_releases = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+
+    apply plugin: 'maven-publish'
+    apply plugin: 'signing'
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                pom {
+                    name = project.name
+                    description = project.description
+                    url = 'https://github.com/peacetrue/spring-data-commons-page'
+                    licenses {
+                        license {
+                            name = 'The Apache License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'xiayouxue'
+                            name = 'xiayouxue'
+                            email = 'xiayouxue@hotmail.com'
+                        }
+                    }
+                    scm {
+                        connection = 'https://github.com/peacetrue/spring-data-commons-page.git'
+                        developerConnection = 'https://github.com/peacetrue/spring-data-commons-page.git'
+                        url = 'https://github.com/peacetrue/spring-data-commons-page'
+                    }
+                }
+
+                from components.java
+
+                artifact sourcesJar
+                artifact javadocJar
+            }
+        }
+
+        repositories {
+            maven {
+                url version.endsWith('SNAPSHOT') ? repository_snapshots : repository_releases
+                credentials {
+                    username = ossrhUsername
+                    password = ossrhPassword
+                }
+            }
+        }
+    }
+
+    signing {
+        sign publishing.publications.mavenJava
+    }
+
+}

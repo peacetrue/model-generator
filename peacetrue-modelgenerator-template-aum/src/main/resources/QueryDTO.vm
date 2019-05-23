@@ -1,0 +1,32 @@
+package $packageName;
+
+import lombok.Data;
+
+import java.io.Serializable;
+import com.github.peacetrue.core.Range;
+
+#foreach($property in $properties)
+#if(!$property.typeName.startsWith('java.lang'))
+import $property.typeName;
+#end
+#end
+
+/**
+* ${comment}查询DTO
+ * @author xiayx
+ */
+@Data
+public class ${name}QueryDTO implements Serializable {
+
+#foreach($property in $properties)
+#if($idProperty!=$property)
+    #if($property.typeSimpleName=='Date')
+    /**${property.comment}起止范围*/
+    private Range.Date $property.name = new Range.Date();
+    #else
+    /**$property.comment*/
+    private $property.typeSimpleName $property.name;
+    #end
+#end
+#end
+}
