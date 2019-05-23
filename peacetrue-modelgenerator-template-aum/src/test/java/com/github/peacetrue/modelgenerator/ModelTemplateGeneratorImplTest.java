@@ -46,13 +46,19 @@ public class ModelTemplateGeneratorImplTest {
         model2.setProperties(model.getProperties());
     }
 
+    private String getProjectPath() {
+        return this.getClass().getResource("/").getPath()
+                .split("/peacetrue-modelgenerator-template-aum")[0]
+                + "/peacetrue-modelgenerator-template-aum";
+    }
 
     @Test
     public void entity() throws Exception {
         //require lombok
+
         String content = FileCopyUtils.copyToString(new InputStreamReader(getClass().getResourceAsStream("/Entity.vm")));
         modelTemplateGenerator.generate(model, JavaTemplateImpl.build(content,
-                "/Users/xiayx/Documents/Projects/peacetrue-modelgenerator/src/test/java",
+                getProjectPath() + "/src/test/java",
                 "com.github.peacetrue", model.getName()));
     }
 
@@ -62,7 +68,7 @@ public class ModelTemplateGeneratorImplTest {
         //require peacetrue-core
         String content = FileCopyUtils.copyToString(new InputStreamReader(getClass().getResourceAsStream("/VO.vm")));
         modelTemplateGenerator.generate(model, JavaTemplateImpl.build(content,
-                "/Users/xiayx/Documents/Projects/peacetrue-modelgenerator/src/test/java",
+                getProjectPath() + "/src/test/java",
                 "com.github.peacetrue", model.getName() + "VO"));
     }
 
@@ -72,7 +78,7 @@ public class ModelTemplateGeneratorImplTest {
         //require peacetrue-core
         String content = FileCopyUtils.copyToString(new InputStreamReader(getClass().getResourceAsStream("/AddDTO.vm")));
         modelTemplateGenerator.generate(model, JavaTemplateImpl.build(content,
-                "/Users/xiayx/Documents/Projects/peacetrue-modelgenerator/src/test/java",
+                getProjectPath() + "/src/test/java",
                 "com.github.peacetrue", model.getName() + "AddDTO"));
     }
 
@@ -82,7 +88,7 @@ public class ModelTemplateGeneratorImplTest {
         //require peacetrue-core
         String content = FileCopyUtils.copyToString(new InputStreamReader(getClass().getResourceAsStream("/QueryDTO.vm")));
         modelTemplateGenerator.generate(model, JavaTemplateImpl.build(content,
-                "/Users/xiayx/Documents/Projects/peacetrue-modelgenerator/src/test/java",
+                getProjectPath() + "/src/test/java",
                 "com.github.peacetrue", model.getName() + "QueryDTO"));
     }
 
@@ -92,7 +98,7 @@ public class ModelTemplateGeneratorImplTest {
         //require peacetrue-core
         String content = FileCopyUtils.copyToString(new InputStreamReader(getClass().getResourceAsStream("/GetDTO.vm")));
         modelTemplateGenerator.generate(model, JavaTemplateImpl.build(content,
-                "/Users/xiayx/Documents/Projects/peacetrue-modelgenerator/src/test/java",
+                getProjectPath() + "/src/test/java",
                 "com.github.peacetrue", model.getName() + "GetDTO"));
     }
 
@@ -102,7 +108,7 @@ public class ModelTemplateGeneratorImplTest {
         //require peacetrue-core
         String content = FileCopyUtils.copyToString(new InputStreamReader(getClass().getResourceAsStream("/ModifyDTO.vm")));
         modelTemplateGenerator.generate(model, JavaTemplateImpl.build(content,
-                "/Users/xiayx/Documents/Projects/peacetrue-modelgenerator/src/test/java",
+                getProjectPath() + "/src/test/java",
                 "com.github.peacetrue", model.getName() + "ModifyDTO"));
     }
 
@@ -112,7 +118,7 @@ public class ModelTemplateGeneratorImplTest {
         //require peacetrue-core
         String content = FileCopyUtils.copyToString(new InputStreamReader(getClass().getResourceAsStream("/DeleteDTO.vm")));
         modelTemplateGenerator.generate(model, JavaTemplateImpl.build(content,
-                "/Users/xiayx/Documents/Projects/peacetrue-modelgenerator/src/test/java",
+                getProjectPath() + "/src/test/java",
                 "com.github.peacetrue", model.getName() + "DeleteDTO"));
     }
 
@@ -122,7 +128,7 @@ public class ModelTemplateGeneratorImplTest {
         //require peacetrue-core
         String content = FileCopyUtils.copyToString(new InputStreamReader(getClass().getResourceAsStream("/Service.vm")));
         modelTemplateGenerator.generate(model, JavaTemplateImpl.build(content,
-                "/Users/xiayx/Documents/Projects/peacetrue-modelgenerator/src/test/java",
+                getProjectPath() + "/src/test/java",
                 "com.github.peacetrue", model.getName() + "Service"));
     }
 
@@ -132,7 +138,7 @@ public class ModelTemplateGeneratorImplTest {
         //require peacetrue-core
         String content = FileCopyUtils.copyToString(new InputStreamReader(getClass().getResourceAsStream("/ServiceImpl.vm")));
         modelTemplateGenerator.generate(model, JavaTemplateImpl.build(content,
-                "/Users/xiayx/Documents/Projects/peacetrue-modelgenerator/src/test/java",
+                getProjectPath() + "/src/test/java",
                 "com.github.peacetrue", model.getName() + "ServiceImpl"));
     }
 
@@ -142,7 +148,7 @@ public class ModelTemplateGeneratorImplTest {
         //require peacetrue-core
         String content = FileCopyUtils.copyToString(new InputStreamReader(getClass().getResourceAsStream("/AdminController.vm")));
         modelTemplateGenerator.generate(model, JavaTemplateImpl.build(content,
-                "/Users/xiayx/Documents/Projects/peacetrue-modelgenerator/src/test/java",
+                getProjectPath() + "/src/test/java",
                 "com.github.peacetrue", model.getName() + "Controller"));
     }
 
@@ -152,7 +158,7 @@ public class ModelTemplateGeneratorImplTest {
         //require peacetrue-core
         String content = FileCopyUtils.copyToString(new InputStreamReader(getClass().getResourceAsStream("/AdminController.vm")));
         modelTemplateGenerator.generate(model, JavaTemplateImpl.build(content,
-                "/Users/xiayx/Documents/Projects/peacetrue-modelgenerator/src/test/java",
+                getProjectPath() + "/src/test/java",
                 "com.github.peacetrue.http", model.getName() + "Controller"));
     }
 
@@ -161,7 +167,7 @@ public class ModelTemplateGeneratorImplTest {
         //require lombok
         //require peacetrue-core
         String content = FileCopyUtils.copyToString(new InputStreamReader(getClass().getResourceAsStream("/page_list.vm")));
-        modelTemplateGenerator.generate(model, new TemplateImpl(content, "/Users/xiayx/Documents/Projects/peacetrue-modelgenerator/src/test/resources/" + model.getName() + ".html"));
+        modelTemplateGenerator.generate(model, new TemplateImpl(content, getProjectPath() + "/src/test/resources/" + model.getName() + ".html"));
     }
 
 

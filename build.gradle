@@ -17,8 +17,6 @@ allprojects {
     sourceCompatibility = 1.8
 
     repositories {
-        maven { url('https://nexus.au32.cn/repository/maven-releases') }
-        maven { url('https://nexus.au32.cn/repository/maven-snapshots') }
         mavenCentral()
     }
 

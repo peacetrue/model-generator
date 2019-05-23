@@ -1,4 +1,9 @@
-description '关于黄金管家的spring、dubbo、mybatis项目的模板'
+description '关于黄金管家的spring、dubbo、mybatis项目的模板，仅供内部使用'
+
+repositories {
+    maven { url('https://nexus.au32.cn/repository/maven-releases') }
+    maven { url('https://nexus.au32.cn/repository/maven-snapshots') }
+}
 
 dependencies {
     implementation rootProject

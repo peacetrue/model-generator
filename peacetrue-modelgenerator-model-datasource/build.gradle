@@ -1,0 +1,11 @@
+description '支持模型转换'
+
+dependencies {
+    implementation rootProject
+    implementation 'com.google.guava:guava:23.0'
+
+    testImplementation 'org.springframework:spring-test:5.0.6.RELEASE'
+    testImplementation 'org.springframework:spring-jdbc:5.0.6.RELEASE'
+    testImplementation 'com.h2database:h2:1.4.197'
+
+}
