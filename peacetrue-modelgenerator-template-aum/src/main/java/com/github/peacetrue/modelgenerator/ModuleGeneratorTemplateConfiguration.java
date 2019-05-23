@@ -37,8 +37,8 @@ public class ModuleGeneratorTemplateConfiguration {
                 new String[]{"DeleteDTO.vm", "service-api"},
                 new String[]{"Service.vm", "service-api"},
                 new String[]{"ServiceImpl.vm", "service-impl"},
-                new String[]{"HttpController.vm", "app-http"},
-                new String[]{"AdminController.vm", "app-admin"},
+                new String[]{"Controller_Http.vm", "app-http"},
+                new String[]{"Controller_Admin.vm", "app-admin"},
                 new String[]{"list.vm", "app-admin", "html"},
                 new String[]{"detail.vm", "app-admin", "html"}
         );
@@ -53,7 +53,8 @@ public class ModuleGeneratorTemplateConfiguration {
             JavaTemplate javaTemplate = new JavaTemplate();
             javaTemplate.setContent(getContent(values[0]));
             javaTemplate.setPackageName(String.format("com.aum.%s.modules.%s", properties.getProjectName(), "#{name.toLowerCase()}"));
-            javaTemplate.setOutputPath(filePath + String.format("/com/aum/%s/modules/%s/#{name}.java", properties.getProjectName(), "#{name.toLowerCase()}"));
+            String suffix = values[0].split("\\.")[0].split("_")[0];
+            javaTemplate.setOutputPath(filePath + String.format("/com/aum/%s/modules/%s/#{name}%s.java", properties.getProjectName(), "#{name.toLowerCase()}", suffix));
             return javaTemplate;
         } else {
             //html file

@@ -22,7 +22,7 @@ public class ModelGeneratorImplTest {
     private ModelGenerator modelGenerator;
 
     @Test
-    public void project() {
+    public void generate() {
         modelGenerator.generate(ModelTemplateGeneratorImplTest.model);
     }
 
