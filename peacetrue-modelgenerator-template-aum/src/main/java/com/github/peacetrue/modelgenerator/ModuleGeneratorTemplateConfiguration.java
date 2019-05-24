@@ -58,7 +58,7 @@ public class ModuleGeneratorTemplateConfiguration {
             return javaTemplate;
         } else {
             //html file
-            String filePath = String.format("%s/%s/src/main/resources/templates/#{name.toLowerCase()}/%s.html",
+            String filePath = String.format("%s/%s/src/main/resources/templates/#{lowerCamelName}/%s.html",
                     properties.getProjectSourcePath(),
                     properties.getProjectSourceName() + "-" + values[1],
                     values[0].split("\\.")[0]

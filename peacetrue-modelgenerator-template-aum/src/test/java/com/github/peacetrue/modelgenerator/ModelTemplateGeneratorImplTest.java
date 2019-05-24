@@ -41,7 +41,7 @@ public class ModelTemplateGeneratorImplTest {
                 new ModelProperty("modifiedTime", Date.class, "最近修改时间"),
                 new ModelProperty("modifierId", String.class, "最近修改者主键")
         ));
-        model2.setName("Test2");
+        model2.setName("TestSomeone");
         model2.setComment("测试");
         model2.setProperties(model.getProperties());
     }

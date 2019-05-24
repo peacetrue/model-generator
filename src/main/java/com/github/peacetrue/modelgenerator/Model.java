@@ -1,6 +1,7 @@
 package com.github.peacetrue.modelgenerator;
 
 import lombok.Data;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -12,11 +13,16 @@ import java.util.List;
 @Data
 public class Model {
 
-    /** 名称 */
+    /** 名称，UPPER_CAMEL格式，例如：UpperCamel */
     private String name;
     /** 属性 */
     private List<ModelProperty> properties;
     /** 注释 */
     private String comment;
+
+    /** 获取lower_camel格式的名称 */
+    public String getLowerCamelName() {
+        return StringUtils.uncapitalize(name);
+    }
 
 }
