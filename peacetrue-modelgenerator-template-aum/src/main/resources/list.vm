@@ -11,11 +11,13 @@
         <span slot="title">查询条件</span>
         <i-form ref="condition" :model="condition.params" :rules="condition.rules" inline>
             #foreach($property in $properties)
+            #if($property!=$idProperty)
             <form-item>
                 <i-input type="text" v-model="condition.params.${property.name}" placeholder="${property.comment}">
                     <i-icon type="ios-person-outline" slot="prepend"></i-icon>
                 </i-input>
             </form-item>
+            #end
             #end
             <form-item>
                 <i-button type="primary" @click="query(true)">查询</i-button>
