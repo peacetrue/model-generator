@@ -17,7 +17,7 @@ import java.util.List;
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {
-        ModelGeneratorModelConfiguration.class,
+        ModelGeneratorModelAutoConfiguration.class,
         DataSourceAutoConfiguration.class
 })
 public class DataSourceModelSupplierTest {

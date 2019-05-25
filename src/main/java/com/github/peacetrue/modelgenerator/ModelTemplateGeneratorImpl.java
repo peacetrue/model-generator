@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.ParserContext;
@@ -31,8 +30,14 @@ public class ModelTemplateGeneratorImpl implements ModelTemplateGenerator {
     private VelocityEngine velocityEngine;
     @Autowired
     private ExpressionParser expressionParser;
-    @Value("${peacetrue.model-generator.id-property:id}")
-    private String idProperty;
+    private String idProperty = "id";
+
+    public ModelTemplateGeneratorImpl() {
+    }
+
+    public ModelTemplateGeneratorImpl(String idProperty) {
+        this.idProperty = Objects.requireNonNull(idProperty);
+    }
 
     @Override
     public void generate(Model model, Template template) {

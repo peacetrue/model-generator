@@ -1,7 +1,7 @@
 package com.github.peacetrue.modelgenerator;
 
-import com.github.peacetrue.modelgenerator.template.ModelGeneratorTemplateConfiguration;
-import com.github.peacetrue.modelgenerator.template.aum.ModelGeneratorTemplateAumConfiguration;
+import com.github.peacetrue.modelgenerator.template.ModelGeneratorTemplateAutoConfiguration;
+import com.github.peacetrue.modelgenerator.template.aum.ModelGeneratorTemplateAumAutoConfiguration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +15,9 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {
-        ModelGeneratorConfiguration.class,
-        ModelGeneratorTemplateConfiguration.class,
-        ModelGeneratorTemplateAumConfiguration.class,
+        ModelGeneratorAutoConfiguration.class,
+        ModelGeneratorTemplateAutoConfiguration.class,
+        ModelGeneratorTemplateAumAutoConfiguration.class,
         PropertyPlaceholderAutoConfiguration.class
 })
 @TestPropertySource("classpath:application.properties")

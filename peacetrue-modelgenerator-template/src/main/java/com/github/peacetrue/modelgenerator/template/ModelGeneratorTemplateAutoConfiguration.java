@@ -27,11 +27,11 @@ import java.util.stream.Collectors;
 @Configuration
 @EnableConfigurationProperties(ModelGeneratorTemplateProperties.class)
 @PropertySource("classpath:/peacetrue.modelgenerator.template.properties")
-public class ModelGeneratorTemplateConfiguration {
+public class ModelGeneratorTemplateAutoConfiguration {
 
     private ModelGeneratorTemplateProperties properties;
 
-    public ModelGeneratorTemplateConfiguration(ModelGeneratorTemplateProperties properties) {
+    public ModelGeneratorTemplateAutoConfiguration(ModelGeneratorTemplateProperties properties) {
         this.properties = Objects.requireNonNull(properties);
     }
 

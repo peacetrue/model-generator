@@ -8,6 +8,6 @@ import org.springframework.context.annotation.PropertySource;
  */
 @Configuration
 @PropertySource("classpath:/peacetrue.modelgenerator.template.aum.properties")
-public class ModelGeneratorTemplateAumConfiguration {
+public class ModelGeneratorTemplateAumAutoConfiguration {
 
 }

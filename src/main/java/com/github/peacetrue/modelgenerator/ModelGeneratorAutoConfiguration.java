@@ -18,11 +18,11 @@ import java.util.Objects;
  */
 @Configuration
 @EnableConfigurationProperties(ModelGeneratorProperties.class)
-public class ModelGeneratorConfiguration {
+public class ModelGeneratorAutoConfiguration {
 
     private ModelGeneratorProperties properties;
 
-    public ModelGeneratorConfiguration(ModelGeneratorProperties properties) {
+    public ModelGeneratorAutoConfiguration(ModelGeneratorProperties properties) {
         this.properties = Objects.requireNonNull(properties);
     }
 
@@ -35,14 +35,14 @@ public class ModelGeneratorConfiguration {
     @Bean
     @ConditionalOnMissingBean(ModelTemplateGenerator.class)
     public ModelTemplateGenerator modelTemplateGenerator() {
-        return new ModelTemplateGeneratorImpl();
+        return new ModelTemplateGeneratorImpl(properties.getIdProperty());
     }
 
     @Bean
     public VelocityEngine velocityEngine() {
         VelocityEngine velocityEngine = new VelocityEngine();
         velocityEngine.setProperty(RuntimeConstants.DEFAULT_RUNTIME_LOG_NAME, "model.generator");
-        velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADER, "classpath,file");
+        velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADERS, "classpath,file");
         velocityEngine.setProperty("resource.loader.classpath.class", ClasspathResourceLoader.class.getName());
         velocityEngine.setProperty("resource.loader.file.class", FileResourceLoader.class.getName());
         velocityEngine.init();

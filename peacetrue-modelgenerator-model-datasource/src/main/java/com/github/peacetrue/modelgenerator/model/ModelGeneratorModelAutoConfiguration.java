@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
  * @author xiayx
  */
 @Configuration
-public class ModelGeneratorModelConfiguration {
+public class ModelGeneratorModelAutoConfiguration {
 
     public static final String DATA_SOURCE_MODEL_SUPPLIER = "dataSourceModelSupplier";
 

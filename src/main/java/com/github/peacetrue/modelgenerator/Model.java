@@ -20,7 +20,7 @@ public class Model {
     /** 注释 */
     private String comment;
 
-    /** 获取lower_camel格式的名称 */
+    /** 获取lower_camel格式的名称，例如：lowerCamel */
     public String getLowerCamelName() {
         return StringUtils.uncapitalize(name);
     }
