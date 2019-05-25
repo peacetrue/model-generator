@@ -11,26 +11,89 @@ v1.0, 2019-05-23: SNAPSHOT
 :source-highlighter: coderay
 :coderay-linenums-mode: inline
 
-基于模型信息生成相关源码文件。
+基于模型信息生成相关文件。
 
+== 黄金管家模板分析
+.黄金管家模板源码结构
+image::template-aum.png[]
 
-本来是看了 https://blog.csdn.net/l540675759/article/details/82931785?from=timeline[JavaPoet]，
-才想弄代码生成器的，结果发现
+主要包括三部分：
 
-//TODO 完善文档
-== 模型信息
+. 模板：即**vm**文件，用于生成文件
+. 模板配置，即**properties**文件，用于配置模板及其生成文件的存储路径
+. AutoConfiguration配置，即**java**文件和**spring.factories**，用于自动加载配置到系统中
 
-== Q&A
-* 控制指定模块，生成哪些文件，而不是全部都生成
-* maven-archetype中去掉test模块
-* 格式化生成文件
-* 查询时间转换成范围
-* Service实现没有注释名
-* Table comment 没有读取到
-* 长注释[节点：创建、收货、拆包、称重、检测]有点问题
-* 支持MapperX模板，添加根据code查询
+开发者需要编写模板文件，
+模板文件内容和数量都没有限制，根据实际需要决定。
+如何编写模板，请查看<<_模板编写指导>>。
+模板文件编写完后，需要配置其输出路径。
+如何配置模板路径，请查看<<_模板配置指导>>。
 
-.日志
-* 提供默认的创建者
+== 模板编写指导
+模板引擎使用``velocity``，开发者需要了解其语法。
 
+=== 模型信息
+在编写模板时，需要使用到模型信息。
+
+image::model.png[]
+
+以上模型信息的属性，都可以在模板中使用。
+
+=== 内置扩展属性
+考虑到主键属性比较特殊，
+单独将其作为``idProperty``暴露到模板中，
+它是一个模型属性对象。
+
+在生成java文件时需要使用到包名，
+也将其作为``packageName``暴露到模板中。
+
+=== 自定义扩展属性
+实现接口``TemplatePropertiesSupplier``提供需要暴露自定义属性。
+
+== 模板配置指导
+
+peacetrue.model-generator.templates[0].path::
+指定模板路径，以**classpath:**作为前缀，从类路径读取；以**file:**作为前缀，从文件路径读取。
+
+peacetrue.model-generator.templates[0].package-name::
+如果是生成java文件，则需要指定包名；html文件不需要。
+例如：``com.github.peacetrue.modelgenerator.test``。
+如果需要根据模型信息动态变化，可以使用SPEL表达式，读取模型属性，
+例如：``com.github.peacetrue.modelgenerator.#{lowerName}``。
+
+peacetrue.model-generator.templates[0].output-path::
+指定生成文件的存储路径，
+例如：``peacetrue.model-generator.templates[0].output-path=/Users/xiayx/Documents/Projects/aum-demo/aum-demo-service-api/src/main/java/com/aum/demo/modules/test/Test.java``。
+路径太长，可以使用``peacetrue.model-generator.projectPath=/Users/xiayx/Documents/Projects/aum-demo``指定项目路径，
+则``peacetrue.model-generator.templates[0].output-path=/aum-demo-service-api/src/main/java/com/aum/demo/modules/test/Test.java``；
+如果需要动态变化，可使用属性占位符和SPEL表达式，例如：
+``peacetrue.model-generator.templates[0].output-path=/${peacetrue.model-generator.module-prefix}-service-api/src/main/java/${peacetrue.model-generator.package-prefix-path}/\#{lowerName}/#{name}.java``，
+``peacetrue.model-generator.module-prefix``用于指定项目子模块名称的前缀，
+``peacetrue.model-generator.package-prefix-path``用于指定包的前缀。
+
+以上路径还可以按照标准结构进行细化：
+[source%nowrap,properties]
+----
+include::peacetrue-modelgenerator-template/src/main/resources/peacetrue.modelgenerator.template.properties[]
+----
+
+peacetrue.model-generator.templates:
+指定多个具体的模板信息
+
+peacetrue.model-generator.template:
+指定具体模板的缺省配置，templates下为空的属性会使用template对应的属性
+
+== 数据源模型指导
+
+=== 表名转模型名
+默认将下划线分隔式转换成大写驼峰式，例如：order_task -> OrderTask。
+如需自定义请实现``TableNameToModelName``。
+
+=== 列名转属性名
+默认将下划线分隔式转换成小写驼峰式，例如：order_task -> orderTask。
+如需自定义请实现``ColumnNameToPropertyName``。
+
+=== Sql类型转Java类型
+默认实现参考 https://www.service-architecture.com/articles/database/mapping_sql_and_java_data_types.html[mapping_sql_and_java_data_types]，
+如需自定义请实现``SqlTypeToJavaType``。
 

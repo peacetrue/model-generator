@@ -13,19 +13,19 @@ import java.util.List;
 @Data
 public class Model {
 
-    /** 名称，UPPER_CAMEL格式，例如：UpperCamel */
+    /** 名称，UpperCamel格式，例如：UpperCamel */
     private String name;
     /** 属性 */
     private List<ModelProperty> properties;
     /** 注释 */
     private String comment;
 
-    /** 获取lower_camel格式的名称，例如：lowerCamel */
+    /** 获取lowerCamel格式的名称，例如：lowerCamel */
     public String getLowerCamelName() {
         return StringUtils.uncapitalize(name);
     }
 
-    /** 获取小写名称 */
+    /** 获取小写名称，例如：lowercamel */
     public String getLowerName() {
         return name.toLowerCase();
     }
