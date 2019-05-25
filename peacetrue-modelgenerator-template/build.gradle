@@ -1,0 +1,6 @@
+description '通过配置提供模板信息'
+
+dependencies {
+    implementation rootProject
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:2.0.6.RELEASE'
+}

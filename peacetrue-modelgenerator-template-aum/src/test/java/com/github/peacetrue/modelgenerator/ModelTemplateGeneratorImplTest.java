@@ -1,5 +1,6 @@
 package com.github.peacetrue.modelgenerator;
 
+import com.github.peacetrue.modelgenerator.template.aum.ModelGeneratorTemplateAumConfiguration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.Date;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {
         ModelGeneratorConfiguration.class,
-        ModuleGeneratorTemplateConfiguration.class
+        ModelGeneratorTemplateAumConfiguration.class
 })
 @TestPropertySource("classpath:application.properties")
 public class ModelTemplateGeneratorImplTest {

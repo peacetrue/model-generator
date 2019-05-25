@@ -30,7 +30,7 @@
             },
         },
         created() {
-            axios.get(`/${lowerName}?id=${this.location.params.get('id')}`)
+            axios.get(`/${lowerCamelName}?id=${this.location.params.get('id')}`)
                     .then(t => Vue.set(this, 'data', this.filter(t.data)));
         }
     });

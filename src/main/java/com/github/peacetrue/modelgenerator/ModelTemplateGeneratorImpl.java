@@ -11,7 +11,6 @@ import org.springframework.expression.Expression;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.ParserContext;
 import org.springframework.util.ReflectionUtils;
-import org.springframework.util.StringUtils;
 
 import java.beans.PropertyDescriptor;
 import java.io.FileWriter;
@@ -46,24 +45,26 @@ public class ModelTemplateGeneratorImpl implements ModelTemplateGenerator {
         });
         model.getProperties().stream().filter(modelProperty -> modelProperty.getName().equals(idProperty))
                 .findAny().ifPresent(modelProperty -> velocityContext.put("idProperty", modelProperty));
-        if (template instanceof JavaTemplate) {
-            JavaTemplate javaTemplate = (JavaTemplate) template;
-            Expression expression = expressionParser.parseExpression(javaTemplate.getPackageName(), ParserContext.TEMPLATE_EXPRESSION);
-            velocityContext.put("packageName", expression.getValue(model, String.class));
-        }
-        velocityContext.put("lowerName", StringUtils.uncapitalize(model.getName()));
 
         logger.debug("解析输出路径[{}]的表达式", template.getOutputPath());
         Expression expression = expressionParser.parseExpression(template.getOutputPath(), ParserContext.TEMPLATE_EXPRESSION);
         String outputPath = expression.getValue(model, String.class);
         logger.debug("在位置[{}]处生成文件", outputPath);
 
+        if (template instanceof JavaTemplate) {
+            JavaTemplate javaTemplate = (JavaTemplate) template;
+            expression = expressionParser.parseExpression(javaTemplate.getPackageName(), ParserContext.TEMPLATE_EXPRESSION);
+            String packageName = expression.getValue(model, String.class);
+            velocityContext.put("packageName", packageName);
+        }
+
+
         try {
             Path folderPath = Paths.get(Objects.requireNonNull(outputPath)).getParent();
             if (!Files.exists(folderPath)) Files.createDirectories(folderPath);
             FileWriter fileWriter = new FileWriter(outputPath);
             boolean evaluate = velocityEngine.evaluate(velocityContext, fileWriter, "model-generator", template.getContent());
-            logger.debug("渲染[{}]", evaluate);
+            logger.debug("渲染{}", evaluate ? "完成" : "失败");
             fileWriter.flush();
             fileWriter.close();
         } catch (IOException e) {

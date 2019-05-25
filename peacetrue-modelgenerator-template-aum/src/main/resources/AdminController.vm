@@ -14,20 +14,20 @@ import org.springframework.web.bind.annotation.*;
 * @author xiayx
 */
 @Controller
-@RequestMapping("/${lowerName}")
+@RequestMapping("/${lowerCamelName}")
 public class ${name}Controller {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private ${name}Service ${lowerName}Service;
+    private ${name}Service ${lowerCamelName}Service;
 
     /** 跳转列表页 */
     @GetMapping("/list")
     public String list(Model model) {
         logger.info("跳转列表页");
         logger.debug("model: {}", model);
-        return "${lowerName}/list";
+        return "${lowerCamelName}/list";
     }
 
     /** 跳转详情页 */
@@ -35,7 +35,7 @@ public class ${name}Controller {
     public String detail(Model model) {
         logger.info("跳转详情页");
         logger.debug("model: {}", model);
-        return "${lowerName}/detail";
+        return "${lowerCamelName}/detail";
     }
 
     /** 新增信息 */
@@ -45,7 +45,7 @@ public class ${name}Controller {
         logger.info("新增信息");
         logger.debug("dto: {}", dto);
         dto.setOperatorId(SecurityContextHolder.getContext().getAuthentication().getName());
-        return ${lowerName}Service.add(dto).getId();
+        return ${lowerCamelName}Service.add(dto).getId();
     }
 
     /** 分页查询信息 */
@@ -54,7 +54,7 @@ public class ${name}Controller {
     public Page<${name}VO> query(${name}QueryDTO dto, Pageable pageable) {
         logger.info("分页查询信息");
         logger.debug("dto: {}, pageable: {}", dto, pageable);
-        return ${lowerName}Service.query(dto, pageable);
+        return ${lowerCamelName}Service.query(dto, pageable);
     }
 
     /** 根据主键获取信息 */
@@ -63,7 +63,7 @@ public class ${name}Controller {
     public ${name}VO get(${name}GetDTO dto) {
         logger.info("获取信息");
         logger.debug("dto: {}", dto);
-        return ${lowerName}Service.get(dto);
+        return ${lowerCamelName}Service.get(dto);
     }
 
     /** 修改信息 */
@@ -72,7 +72,7 @@ public class ${name}Controller {
     public void modify(${name}ModifyDTO dto) {
         logger.info("修改信息");
         logger.debug("dto: {}", dto);
-        ${lowerName}Service.modify(dto);
+        ${lowerCamelName}Service.modify(dto);
     }
 
     /** 删除信息 */
@@ -81,7 +81,7 @@ public class ${name}Controller {
     public void delete(${name}DeleteDTO dto) {
         logger.info("删除信息");
         logger.debug("dto: {}", dto);
-        ${lowerName}Service.delete(dto);
+        ${lowerCamelName}Service.delete(dto);
     }
 
 }

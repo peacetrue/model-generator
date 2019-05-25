@@ -7,6 +7,8 @@ repositories {
 
 dependencies {
     implementation rootProject
+    implementation project(":peacetrue-modelgenerator-template")
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:2.0.6.RELEASE'
 
     testImplementation 'com.github.peacetrue:peacetrue-core:1.0-SNAPSHOT'
     testImplementation 'com.github.peacetrue:peacetrue-result:1.0-SNAPSHOT'

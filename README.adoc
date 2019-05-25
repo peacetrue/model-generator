@@ -13,7 +13,24 @@ v1.0, 2019-05-23: SNAPSHOT
 
 基于模型信息生成相关源码文件。
 
-//TODO 完善文档
 
+本来是看了 https://blog.csdn.net/l540675759/article/details/82931785?from=timeline[JavaPoet]，
+才想弄代码生成器的，结果发现
+
+//TODO 完善文档
+== 模型信息
+
+== Q&A
+* 控制指定模块，生成哪些文件，而不是全部都生成
+* maven-archetype中去掉test模块
+* 格式化生成文件
+* 查询时间转换成范围
+* Service实现没有注释名
+* Table comment 没有读取到
+* 长注释[节点：创建、收货、拆包、称重、检测]有点问题
+* 支持MapperX模板，添加根据code查询
+
+.日志
+* 提供默认的创建者
 
 

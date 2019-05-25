@@ -25,4 +25,9 @@ public class Model {
         return StringUtils.uncapitalize(name);
     }
 
+    /** 获取小写名称 */
+    public String getLowerName() {
+        return name.toLowerCase();
+    }
+
 }

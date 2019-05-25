@@ -17,6 +17,10 @@ public class JavaTemplateImpl extends TemplateImpl implements JavaTemplate {
     /** 包名 */
     private String packageName;
 
+    public JavaTemplateImpl(String packageName) {
+        this.packageName = packageName;
+    }
+
     public JavaTemplateImpl(String content, String filePath, String packageName) {
         super(content, filePath);
         this.packageName = packageName;

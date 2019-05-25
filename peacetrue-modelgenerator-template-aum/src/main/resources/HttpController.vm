@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.*;
 * @author xiayx
 */
 @Controller
-@RequestMapping("/${lowerName}")
+@RequestMapping("/${lowerCamelName}")
 public class ${name}Controller {
 
 private Logger logger = LoggerFactory.getLogger(getClass());
 
 @Autowired
-private ${name}Service ${lowerName}Service;
+private ${name}Service ${lowerCamelName}Service;
 
 /** 新增信息 */
 @ResponseBody
@@ -28,7 +28,7 @@ private ${name}Service ${lowerName}Service;
 public String add(${name}AddDTO dto) {
 logger.info("新增信息");
 logger.debug("dto: {}", dto);
-return ${lowerName}Service.add(dto).getId();
+return ${lowerCamelName}Service.add(dto).getId();
 }
 
 /** 分页查询信息 */
@@ -37,7 +37,7 @@ return ${lowerName}Service.add(dto).getId();
 public Page<${name}VO> query(${name}QueryDTO dto, Pageable pageable) {
     logger.info("分页查询信息");
     logger.debug("dto: {}, pageable: {}", dto, pageable);
-    return ${lowerName}Service.query(dto, pageable);
+    return ${lowerCamelName}Service.query(dto, pageable);
     }
 
     /** 根据主键获取信息 */
@@ -46,7 +46,7 @@ public Page<${name}VO> query(${name}QueryDTO dto, Pageable pageable) {
     public ${name}VO get(${name}GetDTO dto) {
     logger.info("获取信息");
     logger.debug("dto: {}", dto);
-    return ${lowerName}Service.get(dto);
+    return ${lowerCamelName}Service.get(dto);
     }
 
     /** 修改信息 */
@@ -55,7 +55,7 @@ public Page<${name}VO> query(${name}QueryDTO dto, Pageable pageable) {
     public void modify(${name}ModifyDTO dto) {
     logger.info("修改信息");
     logger.debug("dto: {}", dto);
-    ${lowerName}Service.modify(dto);
+    ${lowerCamelName}Service.modify(dto);
     }
 
     /** 删除信息 */
@@ -64,7 +64,7 @@ public Page<${name}VO> query(${name}QueryDTO dto, Pageable pageable) {
     public void delete(${name}DeleteDTO dto) {
     logger.info("删除信息");
     logger.debug("dto: {}", dto);
-    ${lowerName}Service.delete(dto);
+    ${lowerCamelName}Service.delete(dto);
     }
 
     }

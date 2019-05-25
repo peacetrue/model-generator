@@ -1,4 +1,4 @@
 rootProject.name = 'peacetrue-modelgenerator'
+include('peacetrue-modelgenerator-template')
 include('peacetrue-modelgenerator-template-aum')
 include('peacetrue-modelgenerator-model-datasource')
-
