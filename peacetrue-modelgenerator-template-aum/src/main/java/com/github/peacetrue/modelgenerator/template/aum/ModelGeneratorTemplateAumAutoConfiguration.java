@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 /**
+ * 黄金管家模板配置
+ *
  * @author xiayx
  */
 @Configuration
