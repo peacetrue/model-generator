@@ -130,7 +130,45 @@ include::peacetrue-modelgenerator-template/src/main/resources/peacetrue.modelgen
 如需自定义请实现``SqlTypeToJavaType``。
 
 == 技术实现分析
-依赖于**spring-boot2**
+基于**spring-boot2**实现。
 
-.生成器模块关系结构
+=== 模块关系结构
 image::generator-model-structure.png[]
+
+开发者可根据需要选择依赖的类库，
+如果只使用核心生成功能，则依赖``peacetrue-modelgenerator``，
+需要自行实现模板供应者``TemplateSupplier``和模型信息供应者``ModelSupplier``。
+也可以基于``peacetrue-modelgenerator-template``提供模板实现；
+或者使用数据库模型信息供应者``peacetrue-modelgenerator-model-datasource``。
+
+=== maven依赖配置
+.peacetrue-modelgenerator
+[source%nowrap,maven]
+----
+<dependency>
+  <groupId>com.github.peacetrue.modelgenerator</groupId>
+  <artifactId>peacetrue-modelgenerator</artifactId>
+  <version>1.0-RELEASE</version>
+</dependency>
+----
+
+.peacetrue-modelgenerator-template
+[source%nowrap,maven]
+----
+<dependency>
+  <groupId>com.github.peacetrue.modelgenerator</groupId>
+  <artifactId>peacetrue-modelgenerator-template</artifactId>
+  <version>1.0-RELEASE</version>
+</dependency>
+----
+
+.peacetrue-modelgenerator-model-datasource
+[source%nowrap,maven]
+----
+<dependency>
+  <groupId>com.github.peacetrue.modelgenerator</groupId>
+  <artifactId>peacetrue-modelgenerator-model-datasource</artifactId>
+  <version>1.0-RELEASE</version>
+</dependency>
+----
+
