@@ -11,10 +11,34 @@ v1.0, 2019-05-23: SNAPSHOT
 :source-highlighter: coderay
 :coderay-linenums-mode: inline
 
-基于模型信息生成相关文件。
+基于模型信息生成相关文件以实现特定功能。
 
 == 黄金管家模板分析
-.黄金管家模板源码结构
+=== 黄金管家项目结构
+image::aum-project-structure.png[]
+
+关于项目名称，需要区分逻辑项目名称和目录项目名称：
+
+* 逻辑项目名称：开发者给项目的命名，例如：demo、ai等
+* 目录项目名称：在创建项目源码时给项目目录的命名，一般会加上公司名前缀，例如：aum-demo、aum-ai等
+
+以上项目名称指目录项目名称，
+以下用项目名称（或项目名）表示逻辑项目名称，
+目录项目名称（或目录项目名）表示目录项目名称。
+
+关于模块，需要区分项目模块和模型模块：
+
+* 项目模块：指项目的下级模块，是目录结构上的划分
+* 模型模块：指模型对应到功能实现上的模块
+
+以下用项目模块表示项目模块，模块表示模型模块。
+
+=== 黄金管家模块结构
+image::aum-module-structure.png[]
+
+以上为按模块进行拆分的结构，很多开发者也会使用按层级拆分的结构。
+
+=== 黄金管家模板源码结构
 image::template-aum.png[]
 
 主要包括三部分：
@@ -23,14 +47,20 @@ image::template-aum.png[]
 . 模板配置，即**properties**文件，用于配置模板及其生成文件的存储路径
 . AutoConfiguration配置，即**java**文件和**spring.factories**，用于自动加载配置到系统中
 
+.具体模板配置
+[source%nowrap,properties]
+----
+include::peacetrue-modelgenerator-template-aum/src/main/resources/peacetrue.modelgenerator.template.aum.properties[]
+----
+
 开发者需要编写模板文件，
 模板文件内容和数量都没有限制，根据实际需要决定。
 如何编写模板，请查看<<_模板编写指导>>。
-模板文件编写完后，需要配置其输出路径。
-如何配置模板路径，请查看<<_模板配置指导>>。
+模板文件编写完后，需要进行配置，
+如何配置模板，请查看<<_模板配置指导>>。
 
 == 模板编写指导
-模板引擎使用``velocity``，开发者需要了解其语法。
+模板引擎使用 http://velocity.apache.org/[velocity^]，开发者需要了解其语法。
 
 === 模型信息
 在编写模板时，需要使用到模型信息。
@@ -51,25 +81,27 @@ image::model.png[]
 实现接口``TemplatePropertiesSupplier``提供需要暴露自定义属性。
 
 == 模板配置指导
+配置属性以前缀**peacetrue.model-generator**作为起始，
+以下描述以**.**开头，均表示省略前缀。
 
-peacetrue.model-generator.templates[0].path::
+&nbsp;.templates[0].path::
 指定模板路径，以**classpath:**作为前缀，从类路径读取；以**file:**作为前缀，从文件路径读取。
 
-peacetrue.model-generator.templates[0].package-name::
+&nbsp;.templates[0].package-name::
 如果是生成java文件，则需要指定包名；html文件不需要。
-例如：``com.github.peacetrue.modelgenerator.test``。
-如果需要根据模型信息动态变化，可以使用SPEL表达式，读取模型属性，
-例如：``com.github.peacetrue.modelgenerator.#{lowerName}``。
+例如：``com.aum.demo.modules.test``。
+如果需要根据模型信息动态变化，可以使用SPEL表达式，支持读取模型属性，
+例如：``com.aum.demo.modules.#{lowerName}``。
 
-peacetrue.model-generator.templates[0].output-path::
+&nbsp;.templates[0].output-path::
 指定生成文件的存储路径，
-例如：``peacetrue.model-generator.templates[0].output-path=/Users/xiayx/Documents/Projects/aum-demo/aum-demo-service-api/src/main/java/com/aum/demo/modules/test/Test.java``。
-路径太长，可以使用``peacetrue.model-generator.projectPath=/Users/xiayx/Documents/Projects/aum-demo``指定项目路径，
-则``peacetrue.model-generator.templates[0].output-path=/aum-demo-service-api/src/main/java/com/aum/demo/modules/test/Test.java``；
+例如：``.templates[0].output-path=/Users/xiayx/Documents/Projects/aum-demo/aum-demo-service-api/src/main/java/com/aum/demo/modules/test/Test.java``。
+路径太长，可以使用``.projectPath=/Users/xiayx/Documents/Projects/aum-demo``指定项目路径，
+则``.templates[0].output-path=/aum-demo-service-api/src/main/java/com/aum/demo/modules/test/Test.java``；
 如果需要动态变化，可使用属性占位符和SPEL表达式，例如：
-``peacetrue.model-generator.templates[0].output-path=/${peacetrue.model-generator.module-prefix}-service-api/src/main/java/${peacetrue.model-generator.package-prefix-path}/\#{lowerName}/#{name}.java``，
-``peacetrue.model-generator.module-prefix``用于指定项目子模块名称的前缀，
-``peacetrue.model-generator.package-prefix-path``用于指定包的前缀。
+``.templates[0].output-path=/${.module-prefix}-service-api/src/main/java/${.package-prefix-path}/\#{lowerName}/#{name}.java``，
+``.module-prefix``用于指定项目模块名称前缀，
+``.package-prefix-path``用于指定包前缀路径。
 
 以上路径还可以按照标准结构进行细化：
 [source%nowrap,properties]
@@ -77,10 +109,10 @@ peacetrue.model-generator.templates[0].output-path::
 include::peacetrue-modelgenerator-template/src/main/resources/peacetrue.modelgenerator.template.properties[]
 ----
 
-peacetrue.model-generator.templates:
+&nbsp;.templates::
 指定多个具体的模板信息
 
-peacetrue.model-generator.template:
+&nbsp;.template::
 指定具体模板的缺省配置，templates下为空的属性会使用template对应的属性
 
 == 数据源模型指导
@@ -94,6 +126,11 @@ peacetrue.model-generator.template:
 如需自定义请实现``ColumnNameToPropertyName``。
 
 === Sql类型转Java类型
-默认实现参考 https://www.service-architecture.com/articles/database/mapping_sql_and_java_data_types.html[mapping_sql_and_java_data_types]，
+默认实现参考 https://www.service-architecture.com/articles/database/mapping_sql_and_java_data_types.html[mapping_sql_and_java_data_types^]，
 如需自定义请实现``SqlTypeToJavaType``。
 
+== 技术实现分析
+依赖于**spring-boot2**
+
+.生成器模块关系结构
+image::generator-model-structure.png[]

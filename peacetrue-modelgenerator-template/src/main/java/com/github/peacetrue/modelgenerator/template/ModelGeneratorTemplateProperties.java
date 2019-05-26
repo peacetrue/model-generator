@@ -30,14 +30,14 @@ public class ModelGeneratorTemplateProperties {
     private String customName1;
     /** 项目名与包名之间的自定义部分 */
     private String customName2 = "modules";
-    /** 包的项目名 */
-    private String packageProjectName;
+    /** 项目名 */
+    private String projectName;
+    /** 项目模块名称前缀 */
+    private String modulePrefix;
     /** 包前缀 */
     private String packagePrefix;
     /** 包前缀路径 */
     private String packagePrefixPath;
-    /** 模块前缀 */
-    private String modulePrefix;
 
     @PostConstruct
     public void init() {

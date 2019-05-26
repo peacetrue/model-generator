@@ -3,6 +3,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'signing'
+    id 'idea'
 }
 
 
@@ -14,6 +15,7 @@ allprojects {
     description '模块生成器'
 
     apply plugin: 'java'
+    apply plugin: 'idea'
     sourceCompatibility = 1.8
 
     repositories {
