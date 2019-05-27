@@ -6,6 +6,8 @@ import com.github.peacetrue.modelgenerator.ModelSupplier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.Nullable;
+import org.springframework.util.CollectionUtils;
 
 import javax.sql.DataSource;
 import java.sql.DatabaseMetaData;
@@ -30,6 +32,14 @@ public class DataSourceModelSupplier implements ModelSupplier {
     private ColumnNameToPropertyName columnNameToPropertyName;
     @Autowired
     private SqlTypeToJavaType sqlTypeToJavaType;
+    private List<String> ignoredModels = new ArrayList<>(0);
+
+    public DataSourceModelSupplier() {
+    }
+
+    public DataSourceModelSupplier(@Nullable List<String> ignoredModels) {
+        if (!CollectionUtils.isEmpty(ignoredModels)) this.ignoredModels.addAll(ignoredModels);
+    }
 
     @Override
     public List<Model> getModels() {
@@ -48,8 +58,14 @@ public class DataSourceModelSupplier implements ModelSupplier {
         while (tables.next()) {
             String tableName = tables.getString(3);
             logger.info("读取表[{}]", tableName);
+            String modelName = tableNameToModelName.getModelName(tableName);
+            if (ignoredModels.contains(modelName)) {
+                logger.debug("模型[{}]已被配置为忽略", modelName);
+                continue;
+            }
+
             Model model = new Model();
-            model.setName(tableNameToModelName.getModelName(tableName));
+            model.setName(modelName);
             model.setComment(tables.getString(5));
             model.setProperties(new ArrayList<>());
             ResultSet columns = metaData.getColumns(null, null, tableName, null);
@@ -66,5 +82,13 @@ public class DataSourceModelSupplier implements ModelSupplier {
             models.add(model);
         }
         return models;
+    }
+
+    public List<String> getIgnoredModels() {
+        return ignoredModels;
+    }
+
+    public void setIgnoredModels(List<String> ignoredModels) {
+        this.ignoredModels = ignoredModels;
     }
 }

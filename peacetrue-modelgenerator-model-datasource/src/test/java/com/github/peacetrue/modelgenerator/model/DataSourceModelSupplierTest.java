@@ -7,7 +7,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
@@ -16,10 +17,11 @@ import java.util.List;
  * @author xiayx
  */
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {
+@SpringBootTest(classes = {
         ModelGeneratorModelAutoConfiguration.class,
         DataSourceAutoConfiguration.class
 })
+@PropertySource("classpath:/application.properties")
 public class DataSourceModelSupplierTest {
 
     @Autowired
@@ -32,4 +34,5 @@ public class DataSourceModelSupplierTest {
         Assert.assertEquals(1, models.size());
         Assert.assertEquals(7, models.get(0).getProperties().size());
     }
+
 }

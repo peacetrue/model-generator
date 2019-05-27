@@ -3,9 +3,10 @@ description '从数据源中读取模型信息'
 dependencies {
     implementation rootProject
     implementation 'com.google.guava:guava:23.0'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:2.0.6.RELEASE'
 
+    testImplementation 'org.springframework.boot:spring-boot-test:2.0.6.RELEASE'
     testImplementation 'org.springframework:spring-test:5.0.6.RELEASE'
     testImplementation 'org.springframework:spring-jdbc:5.0.6.RELEASE'
     testImplementation 'com.h2database:h2:1.4.197'
-
 }
