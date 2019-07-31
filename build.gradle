@@ -30,13 +30,12 @@ allprojects {
         implementation 'org.springframework.boot:spring-boot-autoconfigure:2.0.6.RELEASE'
         implementation 'org.springframework.boot:spring-boot-configuration-processor:2.0.6.RELEASE'
         implementation 'org.springframework:spring-expression:5.0.6.RELEASE'
-        implementation 'ch.qos.logback:logback-classic:1.2.3'
-        
 
         testImplementation 'junit:junit:4.12'
         testImplementation 'org.springframework:spring-test:5.0.6.RELEASE'
         testCompileOnly 'org.projectlombok:lombok:1.16.20'
         testAnnotationProcessor 'org.projectlombok:lombok:1.16.20'
+        testImplementation 'ch.qos.logback:logback-classic:1.2.3'
     }
 
     task sourcesJar(type: Jar) {
